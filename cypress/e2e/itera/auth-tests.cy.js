@@ -2,6 +2,7 @@
 
 import dashboard from "../../../projects/itera/src/pages/dashboard";
 import login from "../../../projects/itera/src/pages/login";
+import testData from "../../fixtures/testData.json";
 
 describe("Authorization test suite", () => {
   it("VerifyLoginPageAuthorization", () => {
@@ -13,18 +14,18 @@ describe("Authorization test suite", () => {
     loginPage
       .getAlertMessage()
       .should("be.visible")
-      .and()
-      .should("have.text", "Wrong username or password");
-    loginPage.fillInInputs("randomUsername", "randomPassword");
+      .and("have.text", "Wrong username or password");
+    loginPage.fillInInputs(testData.username, testData.password);
     loginPage.getClear().click();
     loginPage.getUsername().should("be.empty");
     loginPage.getPassword().should("be.empty");
-    loginPage.fillInInputs("marko", "marko");
+    loginPage.fillInInputs(testData.validUsername, testData.validPassword);
     loginPage.getSubmit().click();
 
+    dashboardPage.getTitle().should("be.visible").and("have.text", "Dashboard");
     dashboardPage
-      .getTitle()
+      .getSubtitle()
       .should("be.visible")
-      .should("have.text", "Dashboard");
+      .and("have.text", `Welcome ${testData.validUsername}`);
   });
 });
