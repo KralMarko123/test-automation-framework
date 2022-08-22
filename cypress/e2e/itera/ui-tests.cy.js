@@ -1,9 +1,12 @@
+/// <reference types="cypress" />
+
 import shared from "../../../projects/itera/src/pages/shared";
 import home from "../../../projects/itera/src/pages/home";
 import practice from "../../../projects/itera/src/pages/practice";
 import tutorial from "../../../projects/itera/src/pages/tutorial";
 import login from "../../../projects/itera/src/pages/login";
 import register from "../../../projects/itera/src/pages/register";
+import createCustomer from "../../../projects/itera/src/pages/createCustomer";
 
 describe("UI test suite", () => {
   it("VerifyHomePageIsDisplayedCorrectly", () => {
@@ -51,5 +54,12 @@ describe("UI test suite", () => {
 
     registerPage.visit();
     registerPage.getRegisterForm().should("be.visible");
+  });
+
+  it("VerifyCreateCustomerPageIsDisplayedCorrectly", () => {
+    const createCustomerPage = new createCustomer();
+
+    createCustomerPage.visit();
+    createCustomerPage.getCreateCustomerForm().should("be.visible");
   });
 });

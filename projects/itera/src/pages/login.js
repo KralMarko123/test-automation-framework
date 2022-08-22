@@ -8,6 +8,7 @@ class login {
       passwordInput: "#Password",
       submitButton: 'input[name="login"]',
       clearButton: 'input[name="clear"]',
+      alertMessage: ".alert-danger",
     };
   }
 
@@ -33,6 +34,10 @@ class login {
 
   getClear() {
     return cy.get(this.locators.clearButton);
+  }
+
+  getAlertMessage() {
+    return cy.get(this.locators.alertMessage);
   }
 
   fillInInputs(username, password) {
