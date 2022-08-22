@@ -17,3 +17,12 @@ The project contains directories for each site automated and covered. The sites 
 
   - Add section in this README file or a separate docs folder with files containing descriptions of practices & guidelines regarding this project
   - Finish ITERA project tests
+
+---
+
+## Setup:
+
+  1. Download/Clone repo
+  2. Run `npm install`
+  3. Run either `npx cypress open` or `npm run test-open` to open the **Cypress test runner**
+  4. Run the tests (**note:** _tests are separated by project into different folders, each containing spec files for whichever aspect of the project they cover_)
