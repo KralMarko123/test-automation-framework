@@ -32,7 +32,7 @@ class createCustomer {
   }
 
   getAddress() {
-    return cy.get(this.locators.emailInput);
+    return cy.get(this.locators.addressInput);
   }
 
   getCity() {

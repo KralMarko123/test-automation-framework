@@ -1,6 +1,6 @@
 {
-  "name": "test",
-  "surname": "test",
+  "name": "testName",
+  "surname": "testSurname",
   "username": "testUsername",
   "validUsername": "marko",
   "password": "testPassword",

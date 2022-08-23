@@ -44,6 +44,12 @@ class login {
     this.getUsername().type(username);
     this.getPassword().type(password);
   }
+
+  loginWithCredentials(username, password) {
+    this.visit();
+    this.fillInInputs(username, password);
+    this.getSubmit().click();
+  }
 }
 
 export default login;

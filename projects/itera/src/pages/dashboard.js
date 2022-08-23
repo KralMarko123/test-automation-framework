@@ -8,6 +8,8 @@ class dashboard {
       createNewCustomerButton: 'a[href="/Customer/Create"]',
       searchInput: "#searching",
       searchButton: 'input[type="submit"]',
+      deleteButton: ".btn-outline-danger",
+      tableRow: "tr",
     };
   }
 
@@ -34,6 +36,12 @@ class dashboard {
   getSubmitSearchButton() {
     return cy.get(this.locators.searchButton);
   }
+
+  getRows() {
+    return cy.get(this.locators.tableRow);
+  }
+
+ 
 }
 
 export default dashboard;
