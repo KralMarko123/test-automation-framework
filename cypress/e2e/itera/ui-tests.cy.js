@@ -7,6 +7,7 @@ import tutorial from "../../../projects/itera/src/pages/tutorial";
 import login from "../../../projects/itera/src/pages/login";
 import register from "../../../projects/itera/src/pages/register";
 import createCustomer from "../../../projects/itera/src/pages/createCustomer";
+import testAutomation from "../../../projects/itera/src/pages/testAutomation";
 
 describe("UI test suite", () => {
   it("VerifyHomePageIsDisplayedCorrectly", () => {
@@ -61,5 +62,16 @@ describe("UI test suite", () => {
 
     createCustomerPage.visit();
     createCustomerPage.getCreateCustomerForm().should("be.visible");
+  });
+
+  it("VerifyTestAutomationPageIsDisplayedCorrectly", () => {
+    const testAutomationPage = new testAutomation();
+
+    testAutomationPage.visit();
+    testAutomationPage
+      .getTitle()
+      .should("be.visible")
+      .and("have.text", "Test automation practice form");
+    testAutomationPage.getCards().should("be.visible").and("have.length", 5);
   });
 });

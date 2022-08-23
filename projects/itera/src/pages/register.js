@@ -11,6 +11,9 @@ class register {
       usernameInput: "#Username",
       passwordInput: "#Password",
       confirmPasswordInput: "#ConfirmPassword",
+      submitButton: "#submit",
+      alertMessage: ".text-danger",
+      successMessage: ".label-success",
     };
   }
 
@@ -48,6 +51,18 @@ class register {
 
   getConfirmPassword() {
     return cy.get(this.locators.confirmPasswordInput);
+  }
+
+  getAlertMessages() {
+    return cy.get(this.locators.alertMessage);
+  }
+
+  getSuccessMessage() {
+    return cy.get(this.locators.successMessage);
+  }
+
+  getSubmit() {
+    return cy.get(this.locators.submitButton);
   }
 
   fillInInputs(

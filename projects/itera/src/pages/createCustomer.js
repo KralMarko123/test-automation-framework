@@ -10,6 +10,8 @@ class createCustomer {
       cityInput: "#City",
       phoneInput: "#Phone",
       emailInput: "#Email",
+      createCustomerButton: 'input[value="Create"]',
+      backToListLink: 'a[href="/Dashboard"]',
     };
   }
 
@@ -43,6 +45,14 @@ class createCustomer {
 
   getEmail() {
     return cy.get(this.locators.emailInput);
+  }
+
+  getCreateCustomerButton() {
+    return cy.get(this.locators.createCustomerButton);
+  }
+
+  getBackToListLink() {
+    return cy.get(this.locators.backToListLink);
   }
 
   fillInInputs(name, company, address, city, phone, email) {
