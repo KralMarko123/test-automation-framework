@@ -1,9 +1,13 @@
 {
+  "name": "test",
+  "surname": "test",
   "username": "testUsername",
   "validUsername": "marko",
   "password": "testPassword",
   "validPassword": "marko",
   "email": "testEmail@test.com",
   "phone": "000-000-000",
-  "city": "testCity"
+  "city": "testCity",
+  "company": "testCompany",
+  "address": "testAddress"
 }
