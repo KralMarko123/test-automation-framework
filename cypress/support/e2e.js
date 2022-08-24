@@ -20,9 +20,9 @@ import "cypress-xpath";
 // require('./commands')
 
 Cypress.on("uncaught:exception", (err, runnable) => {
-  // for some reason using a pom pattern triggers an uncaught exception in some tests
-  // the following line prevents cypress from automatically failing such tests
-  if (err.message.includes("jQuery is not defined")) {
-    return false;
-  }
+	// for some reason using a pom pattern triggers an uncaught exception in some tests
+	// the following line prevents cypress from automatically failing such tests
+	if (err.message.includes("jQuery is not defined")) {
+		return false;
+	}
 });

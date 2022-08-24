@@ -1,15 +1,15 @@
 {
-  "name": "test-automation-practice",
-  "version": "1.0.0",
-  "description": "test automation framework for training purposes",
-  "scripts": {
-    "test-headless": "npx cypress run",
-    "test-open": "npx cypress open"
-  },
-  "author": "Marko Markovikj, Petar Tosevski",
-  "license": "ISC",
-  "devDependencies": {
-    "cypress": "^10.6.0",
-    "cypress-xpath": "^2.0.1"
-  }
+	"name": "test-automation-practice",
+	"version": "1.0.0",
+	"description": "test automation framework for training purposes",
+	"scripts": {
+		"test-headless": "npx cypress run",
+		"test-open": "npx cypress open"
+	},
+	"author": "Marko Markovikj, Petar Tosevski",
+	"license": "ISC",
+	"devDependencies": {
+		"cypress": "^10.6.0",
+		"cypress-xpath": "^2.0.1"
+	}
 }

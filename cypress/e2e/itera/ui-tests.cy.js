@@ -10,68 +10,63 @@ import createCustomer from "../../../projects/itera/src/pages/createCustomer";
 import testAutomation from "../../../projects/itera/src/pages/testAutomation";
 
 describe("UI test suite", () => {
-  it("VerifyHomePageIsDisplayedCorrectly", () => {
-    const sharedLayout = new shared();
-    const homePage = new home();
+	it("VerifyHomePageIsDisplayedCorrectly", () => {
+		const sharedLayout = new shared();
+		const homePage = new home();
 
-    homePage.visit();
-    homePage.getMain().should("be.visible");
+		homePage.visit();
+		homePage.getMain().should("be.visible");
 
-    sharedLayout.getLogo().should("be.visible");
-    sharedLayout.getSearchBar().should("be.visible");
-    sharedLayout.getSubmitButton().should("be.visible");
-    sharedLayout
-      .getFooter()
-      .should("be.visible")
-      .should("contain.text", "© 2022 - Itera QA team");
-  });
+		sharedLayout.getLogo().should("be.visible");
+		sharedLayout.getSearchBar().should("be.visible");
+		sharedLayout.getSubmitButton().should("be.visible");
+		sharedLayout.getFooter().should("be.visible").should("contain.text", "© 2022 - Itera QA team");
+	});
 
-  it("VerifyPracticePageIsDisplayedCorrectly", () => {
-    const practicePage = new practice();
+	it("VerifyPracticePageIsDisplayedCorrectly", () => {
+		const practicePage = new practice();
 
-    practicePage.visit();
-    practicePage
-      .getTitle()
-      .should("have.text", "Software test automation exercises");
-    practicePage.getCards().should("have.length", 8);
-  });
+		practicePage.visit();
+		practicePage.getTitle().should("have.text", "Software test automation exercises");
+		practicePage.getCards().should("have.length", 8);
+	});
 
-  it("VerifyTutorialPageIsDisplayedCorrectly", () => {
-    const tutorialPage = new tutorial();
+	it("VerifyTutorialPageIsDisplayedCorrectly", () => {
+		const tutorialPage = new tutorial();
 
-    tutorialPage.visit();
-    tutorialPage.getTitle().should("have.text", "Tutorial");
-  });
+		tutorialPage.visit();
+		tutorialPage.getTitle().should("have.text", "Tutorial");
+	});
 
-  it("VerifyLoginPageIsDisplayedCorrectly", () => {
-    const loginPage = new login();
+	it("VerifyLoginPageIsDisplayedCorrectly", () => {
+		const loginPage = new login();
 
-    loginPage.visit();
-    loginPage.getLoginForm().should("be.visible");
-  });
+		loginPage.visit();
+		loginPage.getLoginForm().should("be.visible");
+	});
 
-  it("VerifyRegisterPageIsDisplayedCorrectly", () => {
-    const registerPage = new register();
+	it("VerifyRegisterPageIsDisplayedCorrectly", () => {
+		const registerPage = new register();
 
-    registerPage.visit();
-    registerPage.getRegisterForm().should("be.visible");
-  });
+		registerPage.visit();
+		registerPage.getRegisterForm().should("be.visible");
+	});
 
-  it("VerifyCreateCustomerPageIsDisplayedCorrectly", () => {
-    const createCustomerPage = new createCustomer();
+	it("VerifyCreateCustomerPageIsDisplayedCorrectly", () => {
+		const createCustomerPage = new createCustomer();
 
-    createCustomerPage.visit();
-    createCustomerPage.getCreateCustomerForm().should("be.visible");
-  });
+		createCustomerPage.visit();
+		createCustomerPage.getCreateCustomerForm().should("be.visible");
+	});
 
-  it("VerifyTestAutomationPageIsDisplayedCorrectly", () => {
-    const testAutomationPage = new testAutomation();
+	it("VerifyTestAutomationPageIsDisplayedCorrectly", () => {
+		const testAutomationPage = new testAutomation();
 
-    testAutomationPage.visit();
-    testAutomationPage
-      .getTitle()
-      .should("be.visible")
-      .and("have.text", "Test automation practice form");
-    testAutomationPage.getCards().should("be.visible").and("have.length", 5);
-  });
+		testAutomationPage.visit();
+		testAutomationPage
+			.getTitle()
+			.should("be.visible")
+			.and("have.text", "Test automation practice form");
+		testAutomationPage.getCards().should("be.visible").and("have.length", 5);
+	});
 });

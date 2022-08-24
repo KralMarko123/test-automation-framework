@@ -1,13 +1,13 @@
 {
-  "name": "testName",
-  "surname": "testSurname",
-  "username": "testUsername",
-  "validUsername": "marko",
-  "password": "testPassword",
-  "validPassword": "marko",
-  "email": "testEmail@test.com",
-  "phone": "000-000-000",
-  "city": "testCity",
-  "company": "testCompany",
-  "address": "testAddress"
+	"name": "testName",
+	"surname": "testSurname",
+	"username": "testUsername",
+	"validUsername": "marko",
+	"password": "testPassword",
+	"validPassword": "marko",
+	"email": "testEmail@test.com",
+	"phone": "000-000-000",
+	"city": "testCity",
+	"company": "testCompany",
+	"address": "testAddress"
 }
