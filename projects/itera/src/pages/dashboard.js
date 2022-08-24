@@ -9,6 +9,8 @@ class dashboard {
 			searchInput: "#searching",
 			searchButton: 'input[type="submit"]',
 			deleteButton: ".btn-outline-danger",
+			detailsButton: ".btn-outline-info",
+			editButton: '.btn-outline-primary',
 			tableRow: "tr",
 		};
 	}

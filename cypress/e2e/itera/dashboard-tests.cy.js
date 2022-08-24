@@ -6,6 +6,8 @@ import createCustomer from "../../../projects/itera/src/pages/createCustomer";
 import testData from "../../fixtures/testData.json";
 import deleteCustomer from "../../../projects/itera/src/pages/deleteCustomer";
 import { generateRandomIntegerWithMax } from "../../../utils/helpers/helperFunctions";
+import detailsCustomer from "../../../projects/itera/src/pages/detailsCustomer";
+import editCustomer from "../../../projects/itera/src/pages/editCustomer";
 
 describe("Dashboard test suite", () => {
 	beforeEach(() => {
@@ -21,10 +23,10 @@ describe("Dashboard test suite", () => {
 		deleteCustomerPage.getDeleteButton().click();
 	});
 
-	it("VerifyUserCanCreateCustomerFromDashboard", () => {
+	it("VerifyUserCanCreateCustomer", () => {
 		const dashboardPage = new dashboard();
 		const createCustomerPage = new createCustomer();
-		const randomNumber = generateRandomIntegerWithMax(1000).toString();
+		const randomNumber = generateRandomIntegerWithMax(10).toString();
 
 		dashboardPage.getCreateCustomerButton().click();
 		createCustomerPage.fillInInputs(
@@ -59,6 +61,90 @@ describe("Dashboard test suite", () => {
 						break;
 					case 5:
 						cy.wrap(cell).should("contain.text", testData.email + randomNumber);
+						break;
+					default:
+						break;
+				}
+			});
+	});
+
+	it("VerifyDetailsAreCorrectForNewlyCreatedCustomer", () => {
+		const dashboardPage = new dashboard();
+		const createCustomerPage = new createCustomer();
+		const detailsCustomerPage = new detailsCustomer();
+		const randomNumber = generateRandomIntegerWithMax(10).toString();
+
+		dashboardPage.getCreateCustomerButton().click();
+		createCustomerPage.fillInInputs(
+			testData.name + randomNumber,
+			testData.company + randomNumber,
+			testData.address + randomNumber,
+			testData.city + randomNumber,
+			testData.phone + randomNumber,
+			testData.email + randomNumber
+		);
+		createCustomerPage.getCreateCustomerButton().click();
+		dashboardPage.getRows().last().find(dashboardPage.locators.detailsButton).click();
+		detailsCustomerPage.getTitle().should("be.visible").and("have.text", "Details");
+		detailsCustomerPage.getName().should("contain.text", testData.name + randomNumber);
+		detailsCustomerPage.getCompany().should("contain.text", testData.company + randomNumber);
+		detailsCustomerPage.getAddress().should("contain.text", testData.address + randomNumber);
+		detailsCustomerPage.getCity().should("contain.text", testData.city + randomNumber);
+		detailsCustomerPage.getPhone().should("contain.text", testData.phone + randomNumber);
+		detailsCustomerPage.getEmail().should("contain.text", testData.email + randomNumber);
+		detailsCustomerPage.getBackToListLink().click();
+	});
+
+	it("VerifyUserCanEditNewlyCreatedCustomer", () => {
+		const dashboardPage = new dashboard();
+		const createCustomerPage = new createCustomer();
+		const editCustomerPage = new editCustomer();
+		const randomNumber = generateRandomIntegerWithMax(10).toString();
+
+		dashboardPage.getCreateCustomerButton().click();
+		createCustomerPage.fillInInputs(
+			testData.name + randomNumber,
+			testData.company + randomNumber,
+			testData.address + randomNumber,
+			testData.city + randomNumber,
+			testData.phone + randomNumber,
+			testData.email + randomNumber
+		);
+		createCustomerPage.getCreateCustomerButton().click();
+		dashboardPage.getRows().last().find(dashboardPage.locators.editButton).click();
+		editCustomerPage.getTitle().should("be.visible").and("have.text", "Edit");
+		editCustomerPage.fillInInputs(
+			testData.name + "edited",
+			testData.company + "edited",
+			testData.address + "edited",
+			testData.city + "edited",
+			testData.phone + "edited",
+			testData.email + "edited"
+		);
+		editCustomerPage.getSaveCustomerButton().click();
+		dashboardPage
+			.getRows()
+			.last()
+			.find("td")
+			.each((cell, index) => {
+				switch (index) {
+					case 0:
+						cy.wrap(cell).should("contain.text", testData.name + "edited");
+						break;
+					case 1:
+						cy.wrap(cell).should("contain.text", testData.company + "edited");
+						break;
+					case 2:
+						cy.wrap(cell).should("contain.text", testData.address + "edited");
+						break;
+					case 3:
+						cy.wrap(cell).should("contain.text", testData.city + "edited");
+						break;
+					case 4:
+						cy.wrap(cell).should("contain.text", testData.phone + "edited");
+						break;
+					case 5:
+						cy.wrap(cell).should("contain.text", testData.email + "edited");
 						break;
 					default:
 						break;

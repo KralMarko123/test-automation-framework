@@ -1,4 +1,4 @@
-# VerifyUserCanCreateCustomerFromDashboard
+# VerifyUserCanCreateCustomer
 
 ## Preconditions:
 

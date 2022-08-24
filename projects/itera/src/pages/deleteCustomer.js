@@ -14,6 +14,10 @@ class deleteCustomer {
 	getDeleteButton() {
 		return cy.get(this.locators.deleteButton);
 	}
+
+	getBackToListLink() {
+		return cy.get(this.locators.backToListLink);
+	}
 }
 
 export default deleteCustomer;
