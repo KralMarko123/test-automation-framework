@@ -1,4 +1,4 @@
-import { baseURL } from "../constants/misc";
+import { BASE_URL } from "../constants/misc";
 
 class register {
 	constructor() {
@@ -18,7 +18,7 @@ class register {
 	}
 
 	visit() {
-		cy.visit(`${baseURL}/UserRegister/NewUser`);
+		cy.visit(`${BASE_URL}/UserRegister/NewUser`);
 	}
 
 	getRegisterForm() {

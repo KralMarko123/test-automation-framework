@@ -1,4 +1,4 @@
-import { baseURL } from "../constants/misc";
+import { BASE_URL } from "../constants/misc";
 
 class createCustomer {
 	constructor() {
@@ -16,7 +16,7 @@ class createCustomer {
 	}
 
 	visit() {
-		cy.visit(`${baseURL}/Customer/Create`);
+		cy.visit(`${BASE_URL}/Customer/Create`);
 	}
 
 	getCreateCustomerForm() {

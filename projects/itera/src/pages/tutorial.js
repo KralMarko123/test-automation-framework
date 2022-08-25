@@ -1,4 +1,4 @@
-import { baseURL } from "../constants/misc";
+import { BASE_URL } from "../constants/misc";
 
 class tutorial {
 	constructor() {
@@ -8,7 +8,7 @@ class tutorial {
 	}
 
 	visit() {
-		cy.visit(`${baseURL}/home/tutorial`);
+		cy.visit(`${BASE_URL}/home/tutorial`);
 	}
 
 	getTitle() {

@@ -1,4 +1,4 @@
-import { baseURL } from "../constants/misc";
+import { BASE_URL } from "../constants/misc";
 
 class dashboard {
 	constructor() {
@@ -16,7 +16,7 @@ class dashboard {
 	}
 
 	visit() {
-		cy.visit(`${baseURL}/Dashboard`);
+		cy.visit(`${BASE_URL}/Dashboard`);
 	}
 
 	getTitle() {

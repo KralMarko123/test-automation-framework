@@ -1,1 +1,1 @@
-export const baseURL = "https://itera-qa.azurewebsites.net";
+export const BASE_URL = "https://itera-qa.azurewebsites.net";

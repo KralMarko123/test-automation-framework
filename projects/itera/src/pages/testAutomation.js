@@ -1,4 +1,4 @@
-import { baseURL } from "../constants/misc";
+import { BASE_URL } from "../constants/misc";
 
 class testAutomation {
 	constructor() {
@@ -26,7 +26,7 @@ class testAutomation {
 	}
 
 	visit() {
-		cy.visit(`${baseURL}/home/automation`);
+		cy.visit(`${BASE_URL}/home/automation`);
 	}
 
 	getTitle() {
