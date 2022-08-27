@@ -5,9 +5,9 @@ import dashboard from "../../../projects/itera/src/pages/dashboard";
 import createCustomer from "../../../projects/itera/src/pages/createCustomer";
 import testData from "../../fixtures/testData.json";
 import deleteCustomer from "../../../projects/itera/src/pages/deleteCustomer";
-import { generateRandomIntegerWithMax } from "../../../utils/helpers/helperFunctions";
 import detailsCustomer from "../../../projects/itera/src/pages/detailsCustomer";
 import editCustomer from "../../../projects/itera/src/pages/editCustomer";
+import { generateRandomIntegerWithMax } from "../../../utils/helpers/helperFunctions";
 
 describe("Dashboard test suite", () => {
 	beforeEach(() => {
