@@ -5,6 +5,7 @@ class basicAuth {
 		this.locators = {
 			title: ".example h3",
 			paragraph: ".example p",
+			body: "body",
 		};
 	}
 
@@ -18,6 +19,10 @@ class basicAuth {
 
 	getParagraph() {
 		return cy.get(this.locators.paragraph);
+	}
+
+	getBody() {
+		return cy.get(this.locators.body);
 	}
 }
 

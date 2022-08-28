@@ -2,6 +2,8 @@
 
 import addRemove from "../../../projects/the-internet/src/pages/addRemove";
 import basicAuth from "../../../projects/the-internet/src/pages/basicAuth";
+import brokenImages from "../../../projects/the-internet/src/pages/brokenImages";
+import challengingDOM from "../../../projects/the-internet/src/pages/challengingDOM";
 import home from "../../../projects/the-internet/src/pages/home";
 import splitTest from "../../../projects/the-internet/src/pages/splitTest";
 
@@ -41,6 +43,45 @@ describe("The Internet Test Suite", () => {
 	it("Mimicks basic Auth", () => {
 		const basicAuthPage = new basicAuth();
 
-		basicAuthPage.visit();
+		basicAuthPage.visit({
+			failOnStatusCode: false,
+		});
+		basicAuthPage.getBody().should("contain.text", "Not authorized");
+		basicAuthPage.visit({
+			auth: {
+				username: "admin",
+				password: "admin",
+			},
+		});
+		basicAuthPage.getTitle().should("have.text", "Basic Auth");
+		basicAuthPage
+			.getParagraph()
+			.should("contain.text", "Congratulations! You must have the proper credentials.");
+	});
+
+	it("Checks broken images", () => {
+		const brokenImagesPage = new brokenImages();
+
+		brokenImagesPage.visit();
+		brokenImagesPage.getFirstBrokenImage().then((response) => {
+			expect(response.status).to.eq(404);
+		});
+		brokenImagesPage.getSecondBrokenImage().then((response) => {
+			expect(response.status).to.eq(404);
+		});
+	});
+
+	it("Tests a challenging DOM layout", () => {
+		const challengingDOMPage = new challengingDOM();
+
+		challengingDOMPage.visit();
+		challengingDOMPage.getButtons().first().click();
+		challengingDOMPage.getAlertButton().click();
+		challengingDOMPage.getSuccessButton().click();
+		for (let column of [1, 2, 3, 4, 5, 6]) {
+			challengingDOMPage.getTableRowCellsAtColumn(column).each((el, index) => {
+				cy.wrap(el).should("contain.text", index);
+			});
+		}
 	});
 });
