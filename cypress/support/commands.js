@@ -23,3 +23,11 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+//Custom commands
+Cypress.Commands.add("clickElementXTimes", (elementLocator, numberOfClicks) => {
+	while (numberOfClicks > 0) {
+		cy.get(elementLocator).click();
+		numberOfClicks--;
+	}
+});
