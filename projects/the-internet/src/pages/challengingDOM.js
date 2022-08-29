@@ -5,6 +5,7 @@ class challengingDOM {
 		button: ".button",
 		successButton: ".button.success",
 		alertButton: ".button.alert",
+		canvas: "#canvas",
 	};
 
 	visit() {
@@ -25,6 +26,10 @@ class challengingDOM {
 
 	getTableRowCellsAtColumn(column) {
 		return cy.get(`tbody tr > td:nth-of-type(${column})`);
+	}
+
+	getCanvas() {
+		return cy.get(this.locators.canvas);
 	}
 }
 

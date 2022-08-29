@@ -4,6 +4,7 @@ import addRemove from "../../../projects/the-internet/src/pages/addRemove";
 import basicAuth from "../../../projects/the-internet/src/pages/basicAuth";
 import brokenImages from "../../../projects/the-internet/src/pages/brokenImages";
 import challengingDOM from "../../../projects/the-internet/src/pages/challengingDOM";
+import checkbox from "../../../projects/the-internet/src/pages/checkbox";
 import home from "../../../projects/the-internet/src/pages/home";
 import splitTest from "../../../projects/the-internet/src/pages/splitTest";
 
@@ -83,5 +84,18 @@ describe("The Internet Test Suite", () => {
 				cy.wrap(el).should("contain.text", index);
 			});
 		}
+		challengingDOMPage.getCanvas().should("be.visible");
 	});
+
+	it("Tests checkboxes", () => {
+		const checkboxPage = new checkbox();
+
+		checkboxPage.visit();
+		checkboxPage.getCheckboxes().first().should("not.be.checked");
+		checkboxPage.getCheckboxes().last().should("be.checked").uncheck();
+		checkboxPage.getCheckboxes().should("not.be.checked");
+		checkboxPage.getCheckboxes().first().check().should("be.checked");
+	});
+
+	
 });
