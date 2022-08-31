@@ -25,4 +25,8 @@ Cypress.on("uncaught:exception", (err, runnable) => {
 	if (err.message.includes("jQuery is not defined")) {
 		return false;
 	}
+
+	if (err.message.includes("Cannot read properties of null (reading 'document')")) {
+		return false;
+	}
 });

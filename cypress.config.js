@@ -6,6 +6,10 @@ module.exports = defineConfig({
 	redirectionLimit: 50,
 	failOnStatusCode: false,
 
+	env: {
+		maxNumberOfIterations: 100,
+	},
+
 	e2e: {
 		setupNodeEvents(on, config) {
 			// implement node event listeners here

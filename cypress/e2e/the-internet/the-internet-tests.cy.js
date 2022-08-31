@@ -5,19 +5,12 @@ import basicAuth from "../../../projects/the-internet/src/pages/basicAuth";
 import brokenImages from "../../../projects/the-internet/src/pages/brokenImages";
 import challengingDOM from "../../../projects/the-internet/src/pages/challengingDOM";
 import checkbox from "../../../projects/the-internet/src/pages/checkbox";
-import home from "../../../projects/the-internet/src/pages/home";
+import contextMenu from "../../../projects/the-internet/src/pages/contextMenu";
+import disappearingElements from "../../../projects/the-internet/src/pages/disappearingElements";
 import splitTest from "../../../projects/the-internet/src/pages/splitTest";
+import dragAndDrop from "../../../projects/the-internet/src/pages/dragAndDrop";
 
 describe("The Internet Test Suite", () => {
-	it("VerifyHomePageIsLoadedProperly", () => {
-		const homePage = new home();
-
-		homePage.visit();
-		homePage.getContent().should("be.visible");
-		homePage.getTitle().should("have.text", "Welcome to the-internet");
-		homePage.getExerciseLinks().should("have.length", 44);
-	});
-
 	it("Simulates split testing", () => {
 		const splitTestPage = new splitTest();
 		const parapgraphTextToCheck =
@@ -97,5 +90,42 @@ describe("The Internet Test Suite", () => {
 		checkboxPage.getCheckboxes().first().check().should("be.checked");
 	});
 
-	
+	it("Tests the rightclick context menu", () => {
+		const contextMenuPage = new contextMenu();
+
+		contextMenuPage.visit();
+		contextMenuPage.getHotspot().rightclick();
+		cy.on("window:alert", (alert) => {
+			expect(alert).to.contain("You selected a context menu");
+		});
+	});
+
+	it("Tests a disappearing/reappearing element on page refresh", () => {
+		const disappearingElementPage = new disappearingElements();
+
+		disappearingElementPage.visit();
+		disappearingElementPage.checkForElement();
+		cy.reload();
+		disappearingElementPage.checkForElement();
+	});
+
+	it.only("Tests draggable elements", () => {
+		const dragAndDropPage = new dragAndDrop();
+		const dataTransfer = new DataTransfer();
+
+		dragAndDropPage.visit();
+		dragAndDropPage.getColumnA().trigger("dragstart", {
+			dataTransfer,
+		});
+		dragAndDropPage.getColumnB().trigger("drop", {
+			dataTransfer,
+		});
+		dragAndDropPage.getColumnAHeader().should("have.text", "B");
+		dragAndDropPage.getColumnBHeader().should("have.text", "A");
+
+		// ! CYPRESS PLUGIN: CURRENTLY MISBEHAVING //
+		// dragAndDropPage.getColumnB().drag(dragAndDropPage.locators.columnA);
+		// dragAndDropPage.getColumnAHeader().should("have.text", "A");
+		// dragAndDropPage.getColumnBHeader().should("have.text", "B");
+	});
 });
