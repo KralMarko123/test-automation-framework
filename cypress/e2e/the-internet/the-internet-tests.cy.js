@@ -9,6 +9,7 @@ import contextMenu from "../../../projects/the-internet/src/pages/contextMenu";
 import disappearingElements from "../../../projects/the-internet/src/pages/disappearingElements";
 import splitTest from "../../../projects/the-internet/src/pages/splitTest";
 import dragAndDrop from "../../../projects/the-internet/src/pages/dragAndDrop";
+import dropdown from "../../../projects/the-internet/src/pages/dropdown";
 
 describe("The Internet Test Suite", () => {
 	it("Simulates split testing", () => {
@@ -109,7 +110,7 @@ describe("The Internet Test Suite", () => {
 		disappearingElementPage.checkForElement();
 	});
 
-	it.only("Tests draggable elements", () => {
+	it("Tests draggable elements", () => {
 		const dragAndDropPage = new dragAndDrop();
 		const dataTransfer = new DataTransfer();
 
@@ -127,5 +128,21 @@ describe("The Internet Test Suite", () => {
 		// dragAndDropPage.getColumnB().drag(dragAndDropPage.locators.columnA);
 		// dragAndDropPage.getColumnAHeader().should("have.text", "A");
 		// dragAndDropPage.getColumnBHeader().should("have.text", "B");
+	});
+
+	it("Tests a dropdown element", () => {
+		const dropdownPage = new dropdown();
+
+		dropdownPage.visit();
+		dropdownPage.getFirstDropdownElement().should("be.selected");
+		dropdownPage.getDropdown().select("Option 1");
+		dropdownPage.getSelectedElement().should("have.text", "Option 1");
+		dropdownPage.getDropdown().select("Option 2");
+		dropdownPage.getSelectedElement().should("have.text", "Option 2");
+		dropdownPage.getDropdown().select("1");
+		dropdownPage.getDropdown().should("have.value", "1");
+		dropdownPage.getDropdown().select("2");
+		dropdownPage.getDropdown().should("have.value", "2");
+		dropdownPage.getFirstDropdownElement().should("not.be.selected");
 	});
 });
