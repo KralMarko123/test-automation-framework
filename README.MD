@@ -39,3 +39,7 @@ The project contains directories for each site automated and covered. The sites 
     - **Generally use the POM pattern**. Even though Cypress itself might condemn using the **POM** pattern, **we believe** it divides the work in a universally-known-amongst-testers way. Each project should have a **'pages'** directory where we export every page as a module.
 
     - **Consult others**. If there is a scenario or action you are contemplating of automating don't be afraid to ask the other members for their opinion. This project is for demonstration and practice purposes.
+
+
+
+glupost
