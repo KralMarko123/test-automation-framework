@@ -9,6 +9,7 @@ import contextMenu from "../../../projects/the-internet/src/pages/contextMenu";
 import disappearingElements from "../../../projects/the-internet/src/pages/disappearingElements";
 import splitTest from "../../../projects/the-internet/src/pages/splitTest";
 import dragAndDrop from "../../../projects/the-internet/src/pages/dragAndDrop";
+import dynamicControls from "../../../projects/the-internet/src/pages/dynamicControls";
 
 describe("The Internet Test Suite", () => {
 	it("Simulates split testing", () => {
@@ -109,7 +110,7 @@ describe("The Internet Test Suite", () => {
 		disappearingElementPage.checkForElement();
 	});
 
-	it.only("Tests draggable elements", () => {
+	it("Tests draggable elements", () => {
 		const dragAndDropPage = new dragAndDrop();
 		const dataTransfer = new DataTransfer();
 
@@ -127,5 +128,29 @@ describe("The Internet Test Suite", () => {
 		// dragAndDropPage.getColumnB().drag(dragAndDropPage.locators.columnA);
 		// dragAndDropPage.getColumnAHeader().should("have.text", "A");
 		// dragAndDropPage.getColumnBHeader().should("have.text", "B");
+	});
+
+	it("Tests dynamic controls", () => {
+		const dynamicControlsPage = new dynamicControls();
+
+		dynamicControlsPage.visit();
+		dynamicControlsPage.getToggleCheckboxButton().click();
+		dynamicControlsPage.getLoadingBars().should("be.visible");
+		dynamicControlsPage.getCheckbox().should("not.exist");
+		dynamicControlsPage.getMessages().should("have.text", "It's gone!");
+		dynamicControlsPage.getLoadingBars().should("not.be.visible");
+		dynamicControlsPage.getToggleCheckboxButton().click();
+		dynamicControlsPage.getLoadingBars().should("be.visible");
+		dynamicControlsPage.getCheckbox().should("be.visible");
+		dynamicControlsPage.getMessages().should("have.text", "It's back!");
+		dynamicControlsPage.getCheckbox().check().should("be.checked");
+		dynamicControlsPage.getToggleInputButton().click();
+		dynamicControlsPage.getLoadingBars().should("be.visible");
+		dynamicControlsPage.getTextbox().should("be.enabled").type("test").should("have.value", "test");
+		dynamicControlsPage.getMessages().should("have.text", "It's enabled!");
+		dynamicControlsPage.getToggleInputButton().click();
+		dynamicControlsPage.getLoadingBars().should("be.visible");
+		dynamicControlsPage.getTextbox().should("be.disabled");
+		dynamicControlsPage.getMessages().should("have.text", "It's disabled!");
 	});
 });
