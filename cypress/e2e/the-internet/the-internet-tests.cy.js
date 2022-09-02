@@ -10,6 +10,7 @@ import disappearingElements from "../../../projects/the-internet/src/pages/disap
 import splitTest from "../../../projects/the-internet/src/pages/splitTest";
 import dragAndDrop from "../../../projects/the-internet/src/pages/dragAndDrop";
 import dynamicControls from "../../../projects/the-internet/src/pages/dynamicControls";
+import dynamicContent from "../../../projects/the-internet/src/pages/dynamicContent";
 
 describe("The Internet Test Suite", () => {
 	it("Simulates split testing", () => {
@@ -128,6 +129,24 @@ describe("The Internet Test Suite", () => {
 		// dragAndDropPage.getColumnB().drag(dragAndDropPage.locators.columnA);
 		// dragAndDropPage.getColumnAHeader().should("have.text", "A");
 		// dragAndDropPage.getColumnBHeader().should("have.text", "B");
+	});
+
+	it("Tests dynamic content", () => {
+		const dynamicContentPage = new dynamicContent();
+		const oldParagraphTexts = [];
+
+		dynamicContentPage.visit();
+		dynamicContentPage
+			.getParagraphs()
+			.each((paragraph) => {
+				oldParagraphTexts.push(paragraph.text());
+			})
+			.then(() => {
+				cy.reload();
+				oldParagraphTexts.forEach((text, i) => {
+					dynamicContentPage.getParagraphs().eq(i).should("not.have.text", text);
+				});
+			});
 	});
 
 	it("Tests dynamic controls", () => {
