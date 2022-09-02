@@ -9,6 +9,7 @@ import contextMenu from "../../../projects/the-internet/src/pages/contextMenu";
 import disappearingElements from "../../../projects/the-internet/src/pages/disappearingElements";
 import splitTest from "../../../projects/the-internet/src/pages/splitTest";
 import dragAndDrop from "../../../projects/the-internet/src/pages/dragAndDrop";
+import dynamicControls from "../../../projects/the-internet/src/pages/dynamicControls";
 import dynamicContent from "../../../projects/the-internet/src/pages/dynamicContent";
 
 describe("The Internet Test Suite", () => {
@@ -146,5 +147,29 @@ describe("The Internet Test Suite", () => {
 					dynamicContentPage.getParagraphs().eq(i).should("not.have.text", text);
 				});
 			});
+	});
+
+	it("Tests dynamic controls", () => {
+		const dynamicControlsPage = new dynamicControls();
+
+		dynamicControlsPage.visit();
+		dynamicControlsPage.getToggleCheckboxButton().click();
+		dynamicControlsPage.getLoadingBars().should("be.visible");
+		dynamicControlsPage.getCheckbox().should("not.exist");
+		dynamicControlsPage.getMessages().should("have.text", "It's gone!");
+		dynamicControlsPage.getLoadingBars().should("not.be.visible");
+		dynamicControlsPage.getToggleCheckboxButton().click();
+		dynamicControlsPage.getLoadingBars().should("be.visible");
+		dynamicControlsPage.getCheckbox().should("be.visible");
+		dynamicControlsPage.getMessages().should("have.text", "It's back!");
+		dynamicControlsPage.getCheckbox().check().should("be.checked");
+		dynamicControlsPage.getToggleInputButton().click();
+		dynamicControlsPage.getLoadingBars().should("be.visible");
+		dynamicControlsPage.getTextbox().should("be.enabled").type("test").should("have.value", "test");
+		dynamicControlsPage.getMessages().should("have.text", "It's enabled!");
+		dynamicControlsPage.getToggleInputButton().click();
+		dynamicControlsPage.getLoadingBars().should("be.visible");
+		dynamicControlsPage.getTextbox().should("be.disabled");
+		dynamicControlsPage.getMessages().should("have.text", "It's disabled!");
 	});
 });
