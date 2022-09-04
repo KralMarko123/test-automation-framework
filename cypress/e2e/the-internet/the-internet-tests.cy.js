@@ -11,6 +11,7 @@ import splitTest from "../../../projects/the-internet/src/pages/splitTest";
 import dragAndDrop from "../../../projects/the-internet/src/pages/dragAndDrop";
 import dynamicControls from "../../../projects/the-internet/src/pages/dynamicControls";
 import dynamicContent from "../../../projects/the-internet/src/pages/dynamicContent";
+import dynamicLoading from "../../../projects/the-internet/src/pages/dynamicLoading";
 
 describe("The Internet Test Suite", () => {
 	it("Simulates split testing", () => {
@@ -171,5 +172,26 @@ describe("The Internet Test Suite", () => {
 		dynamicControlsPage.getLoadingBars().should("be.visible");
 		dynamicControlsPage.getTextbox().should("be.disabled");
 		dynamicControlsPage.getMessages().should("have.text", "It's disabled!");
+	});
+
+	it("Tests dynamic loading", () => {
+		const dynamicLoadingPage = new dynamicLoading();
+
+		dynamicLoadingPage.visit();
+		dynamicLoadingPage.getFirstLink().click();
+		dynamicLoadingPage.getFinishSection().should("not.be.visible");
+		dynamicLoadingPage.getStartButton().click();
+		dynamicLoadingPage.getLoadingBars().should("be.visible");
+		dynamicLoadingPage.getFinishText().should("be.visible").and("have.text", "Hello World!");
+		dynamicLoadingPage.visit();
+		dynamicLoadingPage.getSecondLink().click();
+		dynamicLoadingPage.getFinishSection().should("not.exist");
+		dynamicLoadingPage.getStartButton().click();
+		dynamicLoadingPage.getLoadingBars().should("be.visible");
+		dynamicLoadingPage
+			.getFinishText()
+			.should("exist")
+			.and("be.visible")
+			.and("have.text", "Hello World!");
 	});
 });
