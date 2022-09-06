@@ -13,6 +13,7 @@ import dynamicControls from "../../../projects/the-internet/src/pages/dynamicCon
 import dynamicContent from "../../../projects/the-internet/src/pages/dynamicContent";
 import entryAd from "../../../projects/the-internet/src/pages/entryAd";
 import dropdown from "../../../projects/the-internet/src/pages/dropdown";
+import dynamicLoading from "../../../projects/the-internet/src/pages/dynamicLoading";
 
 describe("The Internet Test Suite", () => {
 	it("Simulates split testing", () => {
@@ -198,5 +199,26 @@ describe("The Internet Test Suite", () => {
 		dropdownPage.getDropdown().select("2");
 		dropdownPage.getDropdown().should("have.value", "2");
 		dropdownPage.getFirstDropdownElement().should("not.be.selected");
+	});
+
+	it("Tests dynamic loading", () => {
+		const dynamicLoadingPage = new dynamicLoading();
+
+		dynamicLoadingPage.visit();
+		dynamicLoadingPage.getFirstLink().click();
+		dynamicLoadingPage.getFinishSection().should("not.be.visible");
+		dynamicLoadingPage.getStartButton().click();
+		dynamicLoadingPage.getLoadingBars().should("be.visible");
+		dynamicLoadingPage.getFinishText().should("be.visible").and("have.text", "Hello World!");
+		dynamicLoadingPage.visit();
+		dynamicLoadingPage.getSecondLink().click();
+		dynamicLoadingPage.getFinishSection().should("not.exist");
+		dynamicLoadingPage.getStartButton().click();
+		dynamicLoadingPage.getLoadingBars().should("be.visible");
+		dynamicLoadingPage
+			.getFinishText()
+			.should("exist")
+			.and("be.visible")
+			.and("have.text", "Hello World!");
 	});
 });
