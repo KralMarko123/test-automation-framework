@@ -14,6 +14,7 @@ import dynamicContent from "../../../projects/the-internet/src/pages/dynamicCont
 import entryAd from "../../../projects/the-internet/src/pages/entryAd";
 import dropdown from "../../../projects/the-internet/src/pages/dropdown";
 import dynamicLoading from "../../../projects/the-internet/src/pages/dynamicLoading";
+import fileUpload from "../../../projects/the-internet/src/pages/fileUpload";
 
 describe("The Internet Test Suite", () => {
 	it("Simulates split testing", () => {
@@ -220,5 +221,22 @@ describe("The Internet Test Suite", () => {
 			.should("exist")
 			.and("be.visible")
 			.and("have.text", "Hello World!");
+	});
+
+	it("Tests file uploads", () => {
+		const fileUploadPage = new fileUpload();
+		const filePath = "cypress/fixtures/testData.json";
+
+		fileUploadPage.visit();
+		fileUploadPage.getBrowse().selectFile(filePath);
+		fileUploadPage.getUpload().click();
+		fileUploadPage.getUploadedFilesSection().should("contain.text", filePath.substring(17));
+		fileUploadPage.visit();
+		fileUploadPage
+			.getDragAndDropSection()
+			.selectFile(filePath, {
+				action: "drag-drop",
+			})
+			.should("contain.text", filePath.substring(17));
 	});
 });
