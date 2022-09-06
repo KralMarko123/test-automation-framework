@@ -14,6 +14,7 @@ import dynamicContent from "../../../projects/the-internet/src/pages/dynamicCont
 import entryAd from "../../../projects/the-internet/src/pages/entryAd";
 import dropdown from "../../../projects/the-internet/src/pages/dropdown";
 import dynamicLoading from "../../../projects/the-internet/src/pages/dynamicLoading";
+import floatingMenu from "../../../projects/the-internet/src/pages/floatingMenu";
 
 describe("The Internet Test Suite", () => {
 	it("Simulates split testing", () => {
@@ -220,5 +221,15 @@ describe("The Internet Test Suite", () => {
 			.should("exist")
 			.and("be.visible")
 			.and("have.text", "Hello World!");
+	});
+
+	it("Tests a floating menu", () => {
+		const floatingMenuPage = new floatingMenu();
+
+		floatingMenuPage.visit();
+		cy.scrollTo(0, 2000);
+		floatingMenuPage.getMenu().should("be.visible");
+		floatingMenuPage.scrollToBottom();
+		floatingMenuPage.getMenu().should("be.visible");
 	});
 });
