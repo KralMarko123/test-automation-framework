@@ -11,6 +11,7 @@ import splitTest from "../../../projects/the-internet/src/pages/splitTest";
 import dragAndDrop from "../../../projects/the-internet/src/pages/dragAndDrop";
 import dynamicControls from "../../../projects/the-internet/src/pages/dynamicControls";
 import dynamicContent from "../../../projects/the-internet/src/pages/dynamicContent";
+import entryAd from "../../../projects/the-internet/src/pages/entryAd";
 import dropdown from "../../../projects/the-internet/src/pages/dropdown";
 
 describe("The Internet Test Suite", () => {
@@ -172,6 +173,15 @@ describe("The Internet Test Suite", () => {
 		dynamicControlsPage.getLoadingBars().should("be.visible");
 		dynamicControlsPage.getTextbox().should("be.disabled");
 		dynamicControlsPage.getMessages().should("have.text", "It's disabled!");
+	});
+
+	it("Tests an entry ad/modal", () => {
+		const entryAdPage = new entryAd();
+
+		entryAdPage.visit();
+		entryAdPage.getModal().should("be.visible");
+		entryAdPage.getModalClose().click();
+		entryAdPage.getModal().should("exist").and("not.be.visible");
 	});
 
 	it("Tests a dropdown element", () => {
