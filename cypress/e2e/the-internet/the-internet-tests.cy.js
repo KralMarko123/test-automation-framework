@@ -16,6 +16,7 @@ import dropdown from "../../../projects/the-internet/src/pages/dropdown";
 import dynamicLoading from "../../../projects/the-internet/src/pages/dynamicLoading";
 import fileUpload from "../../../projects/the-internet/src/pages/fileUpload";
 import fileDownload from "../../../projects/the-internet/src/pages/fileDownload";
+import floatingMenu from "../../../projects/the-internet/src/pages/floatingMenu";
 
 describe("The Internet Test Suite", () => {
 	it("Tests split testing", () => {
@@ -258,5 +259,15 @@ describe("The Internet Test Suite", () => {
 				action: "drag-drop",
 			})
 			.should("contain.text", filePath.substring(17));
+	});
+
+	it("Tests a floating menu", () => {
+		const floatingMenuPage = new floatingMenu();
+
+		floatingMenuPage.visit();
+		cy.scrollTo(0, 2000);
+		floatingMenuPage.getMenu().should("be.visible");
+		floatingMenuPage.scrollToBottom();
+		floatingMenuPage.getMenu().should("be.visible");
 	});
 });
