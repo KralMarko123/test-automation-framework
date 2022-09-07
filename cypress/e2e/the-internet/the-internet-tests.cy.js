@@ -17,6 +17,7 @@ import dynamicLoading from "../../../projects/the-internet/src/pages/dynamicLoad
 import fileUpload from "../../../projects/the-internet/src/pages/fileUpload";
 import fileDownload from "../../../projects/the-internet/src/pages/fileDownload";
 import floatingMenu from "../../../projects/the-internet/src/pages/floatingMenu";
+import frames from "../../../projects/the-internet/src/pages/frames";
 
 describe("The Internet Test Suite", () => {
 	it("Tests split testing", () => {
@@ -130,11 +131,6 @@ describe("The Internet Test Suite", () => {
 		});
 		dragAndDropPage.getColumnAHeader().should("have.text", "B");
 		dragAndDropPage.getColumnBHeader().should("have.text", "A");
-
-		// ! CYPRESS PLUGIN: CURRENTLY MISBEHAVING //
-		// dragAndDropPage.getColumnB().drag(dragAndDropPage.locators.columnA);
-		// dragAndDropPage.getColumnAHeader().should("have.text", "A");
-		// dragAndDropPage.getColumnBHeader().should("have.text", "B");
 	});
 
 	it("Tests dynamic content", () => {
@@ -269,5 +265,29 @@ describe("The Internet Test Suite", () => {
 		floatingMenuPage.getMenu().should("be.visible");
 		floatingMenuPage.scrollToBottom();
 		floatingMenuPage.getMenu().should("be.visible");
+	});
+
+	it("Tests frames", () => {
+		const framesPage = new frames();
+
+		framesPage.visit();
+		framesPage.getFirstLink().click();
+		framesPage.getTopFrame().within(() => {
+			framesPage.getTopLeftFrame().should("contain.text", "LEFT");
+		});
+		framesPage.getTopFrame().within(() => {
+			framesPage.getTopMiddleFrame().should("contain.text", "MIDDLE");
+		});
+		framesPage.getTopFrame().within(() => {
+			framesPage.getTopRightFrame().should("contain.text", "RIGHT");
+		});
+		framesPage.getBottomFrame().should("contain.text", "BOTTOM");
+		framesPage.visit();
+		framesPage.getSecondLink().click();
+		framesPage.getIFrame().within((frame) => {
+			cy.wrap(frame).find("p").should("have.text", "Your content goes here.");
+			cy.wrap(frame).clear().type("TEST");
+			cy.wrap(frame).find("p").should("have.text", "TEST");
+		});
 	});
 });
