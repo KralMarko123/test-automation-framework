@@ -272,12 +272,23 @@ describe("The Internet Test Suite", () => {
 		floatingMenuPage.getMenu().should("be.visible");
 	});
 
-	it.only("Tests an authentication form", () => {
+	it("Tests an authentication form", () => {
 		const authPage = new auth();
 		const validUsername = "tomsmith";
 		const validPassword = "SuperSecretPassword!";
 
 		authPage.visitLoggedIn();
 		authPage.getErrorSection().should("contain.text", "You must login to view the secure area!");
+		authPage.getLoginButton().click();
+		authPage.getErrorSection().should("contain.text", "Your username is invalid!");
+		authPage.getUsername().type(validUsername);
+		authPage.getLoginButton().click();
+		authPage.getErrorSection().should("contain.text", "Your password is invalid!");
+		authPage.getUsername().type(validUsername);
+		authPage.getPassword().type(validPassword);
+		authPage.getLoginButton().click();
+		authPage.getErrorSection().should("contain.text", "You logged into a secure area!");
+		authPage.getLogoutButton().click();
+		authPage.getErrorSection().should("contain.text", "You logged out of the secure area!");
 	});
 });
