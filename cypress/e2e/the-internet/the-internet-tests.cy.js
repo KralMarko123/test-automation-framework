@@ -17,6 +17,7 @@ import dynamicLoading from "../../../projects/the-internet/src/pages/dynamicLoad
 import fileUpload from "../../../projects/the-internet/src/pages/fileUpload";
 import fileDownload from "../../../projects/the-internet/src/pages/fileDownload";
 import floatingMenu from "../../../projects/the-internet/src/pages/floatingMenu";
+import auth from "../../../projects/the-internet/src/pages/auth";
 
 describe("The Internet Test Suite", () => {
 	it("Tests split testing", () => {
@@ -269,5 +270,14 @@ describe("The Internet Test Suite", () => {
 		floatingMenuPage.getMenu().should("be.visible");
 		floatingMenuPage.scrollToBottom();
 		floatingMenuPage.getMenu().should("be.visible");
+	});
+
+	it.only("Tests an authentication form", () => {
+		const authPage = new auth();
+		const validUsername = "tomsmith";
+		const validPassword = "SuperSecretPassword!";
+
+		authPage.visitLoggedIn();
+		authPage.getErrorSection().should("contain.text", "You must login to view the secure area!");
 	});
 });
