@@ -15,9 +15,10 @@ import entryAd from "../../../projects/the-internet/src/pages/entryAd";
 import dropdown from "../../../projects/the-internet/src/pages/dropdown";
 import dynamicLoading from "../../../projects/the-internet/src/pages/dynamicLoading";
 import fileUpload from "../../../projects/the-internet/src/pages/fileUpload";
+import fileDownload from "../../../projects/the-internet/src/pages/fileDownload";
 
 describe("The Internet Test Suite", () => {
-	it("Simulates split testing", () => {
+	it("Tests split testing", () => {
 		const splitTestPage = new splitTest();
 		const parapgraphTextToCheck =
 			"Also known as split testing. This is a way in which businesses are able to simultaneously test and learn different versions of a page to see which text and/or functionality works best towards a desired outcome (e.g. a user action such as a click-through).";
@@ -27,7 +28,7 @@ describe("The Internet Test Suite", () => {
 		splitTestPage.getParagraph().should("contain.text", parapgraphTextToCheck);
 	});
 
-	it("Adds/Removes DOM Elements", () => {
+	it("Tests adding/removing DOM elements", () => {
 		const addRemovePage = new addRemove();
 
 		addRemovePage.visit();
@@ -40,7 +41,7 @@ describe("The Internet Test Suite", () => {
 		addRemovePage.getAddedButtons().should("not.exist");
 	});
 
-	it("Mimicks basic Auth", () => {
+	it("Tests basic auth", () => {
 		const basicAuthPage = new basicAuth();
 
 		basicAuthPage.visit({
@@ -59,7 +60,7 @@ describe("The Internet Test Suite", () => {
 			.should("contain.text", "Congratulations! You must have the proper credentials.");
 	});
 
-	it("Checks broken images", () => {
+	it("Tests broken images", () => {
 		const brokenImagesPage = new brokenImages();
 
 		brokenImagesPage.visit();
@@ -221,6 +222,25 @@ describe("The Internet Test Suite", () => {
 			.should("exist")
 			.and("be.visible")
 			.and("have.text", "Hello World!");
+	});
+
+	it("Tests downloading files", () => {
+		const fileDownloadPage = new fileDownload();
+		const downloadsFolder = Cypress.config("downloadsFolder");
+
+		fileDownloadPage.visit();
+		fileDownloadPage.getLinks().each((link) => {
+			const file = link.text();
+			const fileFullURL = fileDownloadPage.getFullFileURL(file);
+
+			cy.downloadFile(fileFullURL, downloadsFolder, file);
+			cy.readFile(`${downloadsFolder}\\${file}`);
+
+			//just to try out the assertion, unfortunately asserting larger files crashes cypress
+			if (file.endsWith(".txt")) {
+				cy.readFile(`${downloadsFolder}\\${file}`).should("exist");
+			}
+		});
 	});
 
 	it("Tests file uploads", () => {
