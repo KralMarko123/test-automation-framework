@@ -14,6 +14,8 @@ import dynamicContent from "../../../projects/the-internet/src/pages/dynamicCont
 import entryAd from "../../../projects/the-internet/src/pages/entryAd";
 import dropdown from "../../../projects/the-internet/src/pages/dropdown";
 import dynamicLoading from "../../../projects/the-internet/src/pages/dynamicLoading";
+import forgotPassword from "../../../projects/the-internet/src/pages/forgotPassword";
+import testData from "../../fixtures/testData.json";
 
 describe("The Internet Test Suite", () => {
 	it("Simulates split testing", () => {
@@ -220,5 +222,19 @@ describe("The Internet Test Suite", () => {
 			.should("exist")
 			.and("be.visible")
 			.and("have.text", "Hello World!");
+	});
+
+	it("Tests a forgot password form", () => {
+		const forgotPasswordPage = new forgotPassword();
+
+		cy.intercept("POST", "/forgot_password").as("forgotPassword");
+		forgotPasswordPage.visit();
+		forgotPasswordPage.getEmailInput().type(testData.email);
+		forgotPasswordPage.getSubmitButton().click();
+		cy.wait("@forgotPassword").then((interception) => {
+			expect(interception.request.body).to.contain(testData.email.replace("@", "%40"));
+			expect(interception.response.statusCode).to.eq(500);
+			expect(interception.response.body).to.contain("Internal Server Error");
+		});
 	});
 });
