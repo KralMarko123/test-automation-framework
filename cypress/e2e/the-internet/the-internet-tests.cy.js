@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import * as helperFunctions from "../../../utils/helpers/helperFunctions";
 import addRemove from "../../../projects/the-internet/src/pages/addRemove";
 import basicAuth from "../../../projects/the-internet/src/pages/basicAuth";
 import brokenImages from "../../../projects/the-internet/src/pages/brokenImages";
@@ -17,6 +18,7 @@ import dynamicLoading from "../../../projects/the-internet/src/pages/dynamicLoad
 import fileUpload from "../../../projects/the-internet/src/pages/fileUpload";
 import fileDownload from "../../../projects/the-internet/src/pages/fileDownload";
 import floatingMenu from "../../../projects/the-internet/src/pages/floatingMenu";
+import geolocation from "../../../projects/the-internet/src/pages/geolocation";
 
 describe("The Internet Test Suite", () => {
 	it("Tests split testing", () => {
@@ -269,5 +271,20 @@ describe("The Internet Test Suite", () => {
 		floatingMenuPage.getMenu().should("be.visible");
 		floatingMenuPage.scrollToBottom();
 		floatingMenuPage.getMenu().should("be.visible");
+	});
+
+	it("Tests geolocation", () => {
+		const geolocationPage = new geolocation();
+		const fakeLatitude = helperFunctions.generateRandomIntegerWithMax(100);
+		const fakeLongitude = helperFunctions.generateRandomIntegerWithMax(100);
+
+		geolocationPage.visit(fakeLatitude, fakeLongitude);
+		geolocationPage.getWhereAmIButton().click();
+		geolocationPage.getLatitude().should("have.text", fakeLatitude);
+		geolocationPage.getLongitude().should("have.text", fakeLongitude);
+		geolocationPage
+			.getMapLink()
+			.invoke("attr", "href")
+			.should("contain", `${fakeLatitude},${fakeLongitude}`);
 	});
 });
