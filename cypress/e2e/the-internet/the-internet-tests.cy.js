@@ -17,6 +17,7 @@ import dynamicLoading from "../../../projects/the-internet/src/pages/dynamicLoad
 import fileUpload from "../../../projects/the-internet/src/pages/fileUpload";
 import fileDownload from "../../../projects/the-internet/src/pages/fileDownload";
 import floatingMenu from "../../../projects/the-internet/src/pages/floatingMenu";
+import exitIntent from "../../../projects/the-internet/src/pages/exitIntent";
 
 describe("The Internet Test Suite", () => {
 	it("Tests split testing", () => {
@@ -269,5 +270,17 @@ describe("The Internet Test Suite", () => {
 		floatingMenuPage.getMenu().should("be.visible");
 		floatingMenuPage.scrollToBottom();
 		floatingMenuPage.getMenu().should("be.visible");
+	});
+
+	it("Tests exiting out of view", () => {
+		const exitIntentPage = new exitIntent();
+
+		/** Dislcaimer: This should be triggered by mousing out of the view but unfortunately 
+		the library used for the modal seems to have some issues */
+		exitIntentPage.visit();
+		exitIntentPage.getModal().should("not.be.visible");
+		exitIntentPage.getDocument().trigger("mouseout");
+		exitIntentPage.getModalContainer().invoke("attr", "style", "display: block");
+		exitIntentPage.getModal().should("be.visible");
 	});
 });
