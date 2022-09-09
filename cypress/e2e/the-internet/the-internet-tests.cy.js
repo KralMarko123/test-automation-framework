@@ -17,6 +17,7 @@ import dynamicLoading from "../../../projects/the-internet/src/pages/dynamicLoad
 import fileUpload from "../../../projects/the-internet/src/pages/fileUpload";
 import fileDownload from "../../../projects/the-internet/src/pages/fileDownload";
 import floatingMenu from "../../../projects/the-internet/src/pages/floatingMenu";
+import hovers from "../../../projects/the-internet/src/pages/hovers";
 
 describe("The Internet Test Suite", () => {
 	it("Tests split testing", () => {
@@ -269,5 +270,18 @@ describe("The Internet Test Suite", () => {
 		floatingMenuPage.getMenu().should("be.visible");
 		floatingMenuPage.scrollToBottom();
 		floatingMenuPage.getMenu().should("be.visible");
+	});
+
+	it("Tests Hovers", () => {
+		const hoversPage = new hovers();
+		for (var index = 0; index < 3; index++) {
+			hoversPage.visit();
+			hoversPage.getProfileInfo().eq(index).should("not.be.visible");
+			hoversPage.getViewProfileButton().eq(index).should("not.be.visible");
+			hoversPage.getProfileInfo().eq(index).invoke("show");
+			hoversPage.getProfileInfo().eq(index).should("be.visible");
+			hoversPage.getViewProfileButton().eq(index).should("be.visible");
+			hoversPage.getViewProfileButton().eq(index).click();
+		}
 	});
 });
