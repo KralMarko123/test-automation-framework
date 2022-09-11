@@ -272,16 +272,17 @@ describe("The Internet Test Suite", () => {
 		floatingMenuPage.getMenu().should("be.visible");
 	});
 
-	it("Tests Hovers", () => {
+	it.only("Tests Hovers", () => {
 		const hoversPage = new hovers();
-		for (var index = 0; index < 3; index++) {
+		for (var i = 0; i < 3; i++) {
 			hoversPage.visit();
-			hoversPage.getProfileInfo().eq(index).should("not.be.visible");
-			hoversPage.getViewProfileButton().eq(index).should("not.be.visible");
-			hoversPage.getProfileInfo().eq(index).invoke("show");
-			hoversPage.getProfileInfo().eq(index).should("be.visible");
-			hoversPage.getViewProfileButton().eq(index).should("be.visible");
-			hoversPage.getViewProfileButton().eq(index).click();
+			hoversPage.getProfileInfo(i).should("not.be.visible");
+			hoversPage.getViewProfileLink(i).should("not.be.visible");
+			hoversPage.getProfileInfo(i).invoke("show");
+			hoversPage.getProfileInfo(i).should("be.visible");
+			hoversPage.getViewProfileLink(i).should("be.visible");
+			hoversPage.getViewProfileLink(i).click();
+			hoversPage.getNotFoundtitle().should("be.visible");
 		}
 	});
 });
