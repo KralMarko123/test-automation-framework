@@ -272,7 +272,7 @@ describe("The Internet Test Suite", () => {
 		floatingMenuPage.getMenu().should("be.visible");
 	});
 
-	it.only("Tests Hovers", () => {
+	it("Tests Hovers", () => {
 		const hoversPage = new hovers();
 		for (var i = 0; i < 3; i++) {
 			hoversPage.visit();
