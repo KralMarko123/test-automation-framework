@@ -18,6 +18,7 @@ import fileUpload from "../../../projects/the-internet/src/pages/fileUpload";
 import fileDownload from "../../../projects/the-internet/src/pages/fileDownload";
 import floatingMenu from "../../../projects/the-internet/src/pages/floatingMenu";
 import hovers from "../../../projects/the-internet/src/pages/hovers";
+import infiniteScroll from "../../../projects/the-internet/src/pages/infiniteScroll";
 
 describe("The Internet Test Suite", () => {
 	it("Tests split testing", () => {
@@ -284,5 +285,16 @@ describe("The Internet Test Suite", () => {
 			hoversPage.getViewProfileLink(i).click();
 			hoversPage.getNotFoundtitle().should("be.visible");
 		}
+	});
+
+	it.only("Tests Infinite Scroll", () => {
+		const infiniteScrollPage = new infiniteScroll();
+			infiniteScrollPage.visit();
+
+			for(let i = 1; i < 10; i++)
+			{
+				cy.get(`.jscroll-inner > :nth-child(${i})`).scrollIntoView()  
+			}
+			
 	});
 });
