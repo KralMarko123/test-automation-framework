@@ -287,13 +287,13 @@ describe("The Internet Test Suite", () => {
 		}
 	});
 
-	it("Tests Infinite Scroll", () => {
+	it.only("Tests Infinite Scroll", () => {
 		const infiniteScrollPage = new infiniteScroll();
 		infiniteScrollPage.visit();
 
 		for (let i = 1; i < 10; i++) {
 			infiniteScrollPage.getInfiniteText().last().scrollIntoView({ duration: 150, easing: "swing" });
-			infiniteScrollPage.getPlaceholderText().should("be.visible");
+			infiniteScrollPage.getPlaceholderText().should("be.visible").and("have.text", "Loading...");
 			infiniteScrollPage.getInfiniteScrollChild(`:nth-child(${i})`).should("be.visible");
 			infiniteScrollPage.getInfiniteText().should("have.length", i + 1);
 		}
