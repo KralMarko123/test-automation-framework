@@ -17,6 +17,7 @@ import dynamicLoading from "../../../projects/the-internet/src/pages/dynamicLoad
 import fileUpload from "../../../projects/the-internet/src/pages/fileUpload";
 import fileDownload from "../../../projects/the-internet/src/pages/fileDownload";
 import floatingMenu from "../../../projects/the-internet/src/pages/floatingMenu";
+import hovers from "../../../projects/the-internet/src/pages/hovers";
 import auth from "../../../projects/the-internet/src/pages/auth";
 
 describe("The Internet Test Suite", () => {
@@ -270,6 +271,20 @@ describe("The Internet Test Suite", () => {
 		floatingMenuPage.getMenu().should("be.visible");
 		floatingMenuPage.scrollToBottom();
 		floatingMenuPage.getMenu().should("be.visible");
+	});
+
+	it("Tests Hovers", () => {
+		const hoversPage = new hovers();
+		for (var i = 0; i < 3; i++) {
+			hoversPage.visit();
+			hoversPage.getProfileInfo(i).should("not.be.visible");
+			hoversPage.getViewProfileLink(i).should("not.be.visible");
+			hoversPage.getProfileInfo(i).invoke("show");
+			hoversPage.getProfileInfo(i).should("be.visible");
+			hoversPage.getViewProfileLink(i).should("be.visible");
+			hoversPage.getViewProfileLink(i).click();
+			hoversPage.getNotFoundtitle().should("be.visible");
+		}
 	});
 
 	it("Tests an authentication form", () => {
