@@ -9,7 +9,8 @@
 	"author": "Marko Markovikj, Petar Tosevski",
 	"license": "ISC",
 	"devDependencies": {
-		"cypress": "^10.6.0",
+		"@4tw/cypress-drag-drop": "^2.2.1",
+		"cypress": "^10.7.0",
 		"cypress-downloadfile": "^1.2.3",
 		"cypress-xpath": "^2.0.1"
 	}
