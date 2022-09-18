@@ -25,6 +25,7 @@ import auth from "../../../projects/the-internet/src/pages/auth";
 import forgotPassword from "../../../projects/the-internet/src/pages/forgotPassword";
 import testData from "../../fixtures/testData.json";
 import geolocation from "../../../projects/the-internet/src/pages/geolocation";
+import exitIntent from "../../../projects/the-internet/src/pages/exitIntent";
 
 describe("The Internet Test Suite", () => {
 	it("Tests split testing", () => {
@@ -368,5 +369,17 @@ it("Tests a forgot password form", () => {
 			.getMapLink()
 			.invoke("attr", "href")
 			.should("contain", `${fakeLatitude},${fakeLongitude}`);
+	});
+
+	it("Tests exiting out of view", () => {
+		const exitIntentPage = new exitIntent();
+
+		/** Dislcaimer: This should be triggered by mousing out of the view but unfortunately 
+		the library used for the modal seems to have some issues */
+		exitIntentPage.visit();
+		exitIntentPage.getModal().should("not.be.visible");
+		exitIntentPage.getDocument().trigger("mouseout");
+		exitIntentPage.getModalContainer().invoke("attr", "style", "display: block");
+		exitIntentPage.getModal().should("be.visible");
 	});
 });
