@@ -286,7 +286,7 @@ describe("The Internet Test Suite", () => {
 			value += 0.5;
 		}
 	});
-  
+
 	it("Tests Hovers", () => {
 		const hoversPage = new hovers();
 		for (var i = 0; i < 3; i++) {
@@ -322,6 +322,8 @@ describe("The Internet Test Suite", () => {
 			cy.wrap(frame).find("p").should("have.text", "Your content goes here.");
 			cy.wrap(frame).clear().type("TEST");
 			cy.wrap(frame).find("p").should("have.text", "TEST");
+		});
+	});
 
 	it("Tests an authentication form", () => {
 		const authPage = new auth();
@@ -341,8 +343,9 @@ describe("The Internet Test Suite", () => {
 		authPage.getErrorSection().should("contain.text", "You logged into a secure area!");
 		authPage.getLogoutButton().click();
 		authPage.getErrorSection().should("contain.text", "You logged out of the secure area!");
+	});
 
-it("Tests a forgot password form", () => {
+	it("Tests a forgot password form", () => {
 		const forgotPasswordPage = new forgotPassword();
 
 		cy.intercept("POST", "/forgot_password").as("forgotPassword");
