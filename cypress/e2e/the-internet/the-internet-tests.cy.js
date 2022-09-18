@@ -18,6 +18,7 @@ import dynamicLoading from "../../../projects/the-internet/src/pages/dynamicLoad
 import fileUpload from "../../../projects/the-internet/src/pages/fileUpload";
 import fileDownload from "../../../projects/the-internet/src/pages/fileDownload";
 import floatingMenu from "../../../projects/the-internet/src/pages/floatingMenu";
+import horizontalSlider from "../../../projects/the-internet/src/pages/horizontalSlider";
 import hovers from "../../../projects/the-internet/src/pages/hovers";
 import frames from "../../../projects/the-internet/src/pages/frames";
 import auth from "../../../projects/the-internet/src/pages/auth";
@@ -273,6 +274,18 @@ describe("The Internet Test Suite", () => {
 		floatingMenuPage.getMenu().should("be.visible");
 	});
 
+	it("Tests a horizontal slider", () => {
+		const horizontalSliderPage = new horizontalSlider();
+		let value = 0.5;
+
+		horizontalSliderPage.visit();
+		while (value <= 5) {
+			horizontalSliderPage.getSlider().invoke("val", value).trigger("change");
+			horizontalSliderPage.getSliderLabel().should("have.text", value);
+			value += 0.5;
+		}
+	});
+  
 	it("Tests Hovers", () => {
 		const hoversPage = new hovers();
 		for (var i = 0; i < 3; i++) {
