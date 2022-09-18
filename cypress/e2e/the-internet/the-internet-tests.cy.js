@@ -18,6 +18,8 @@ import fileUpload from "../../../projects/the-internet/src/pages/fileUpload";
 import fileDownload from "../../../projects/the-internet/src/pages/fileDownload";
 import floatingMenu from "../../../projects/the-internet/src/pages/floatingMenu";
 import hovers from "../../../projects/the-internet/src/pages/hovers";
+import forgotPassword from "../../../projects/the-internet/src/pages/forgotPassword";
+import testData from "../../fixtures/testData.json";
 
 describe("The Internet Test Suite", () => {
 	it("Tests split testing", () => {
@@ -284,5 +286,19 @@ describe("The Internet Test Suite", () => {
 			hoversPage.getViewProfileLink(i).click();
 			hoversPage.getNotFoundtitle().should("be.visible");
 		}
+	});
+
+	it("Tests a forgot password form", () => {
+		const forgotPasswordPage = new forgotPassword();
+
+		cy.intercept("POST", "/forgot_password").as("forgotPassword");
+		forgotPasswordPage.visit();
+		forgotPasswordPage.getEmailInput().type(testData.email);
+		forgotPasswordPage.getSubmitButton().click();
+		cy.wait("@forgotPassword").then((interception) => {
+			expect(interception.request.body).to.contain(testData.email.replace("@", "%40"));
+			expect(interception.response.statusCode).to.eq(500);
+			expect(interception.response.body).to.contain("Internal Server Error");
+		});
 	});
 });
