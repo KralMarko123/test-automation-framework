@@ -1,4 +1,3 @@
-require("@4tw/cypress-drag-drop");
 require("cypress-downloadfile/lib/downloadFileCommand");
 
 //Custom commands
@@ -7,4 +6,8 @@ Cypress.Commands.add("clickElementXTimes", (elementLocator, numberOfClicks) => {
 		cy.get(elementLocator).click();
 		numberOfClicks--;
 	}
+});
+
+Cypress.Commands.add("getFrame", (frameLocator) => {
+	return cy.get(frameLocator).its("0.contentDocument.body").should("not.be.empty");
 });
