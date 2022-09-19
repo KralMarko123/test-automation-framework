@@ -287,7 +287,7 @@ describe("The Internet Test Suite", () => {
 		}
 	});
 
-	it.only("Tests Infinite Scroll", () => {
+	it("Tests Infinite Scroll", () => {
 		const infiniteScrollPage = new infiniteScroll();
 		infiniteScrollPage.visit();
 
