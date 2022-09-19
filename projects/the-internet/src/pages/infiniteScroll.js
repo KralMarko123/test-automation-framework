@@ -4,7 +4,7 @@ class infiniteScroll {
 	locators = {
 		infiniteScrollText: ".jscroll-added",
 		placeholderText: "small",
-		infiniteScrollChild: ".jscroll-inner >",
+		infiniteScrollChild: `.jscroll-inner > :nth-child(${1})`,
 	};
 
 	visit() {
