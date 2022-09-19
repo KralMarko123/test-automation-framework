@@ -3,8 +3,7 @@ import { BASE_URL } from "../constants/misc";
 class infiniteScroll {
 	locators = {
 		infiniteScrollText: ".jscroll-added",
-		placeholderText: "small",
-		infiniteScrollChild: `.jscroll-inner > :nth-child(${1})`,
+		placeholderText: "small"
 	};
 
 	visit() {
@@ -19,8 +18,8 @@ class infiniteScroll {
 		return cy.get(this.locators.placeholderText);
 	}
 
-	getInfiniteScrollChild() {
-		return cy.get(this.locators.infiniteScrollChild);
+	getInfiniteScrollChild(i) {
+		return cy.get (`.jscroll-inner > :nth-child(${i})`);
 	}
 }
 
