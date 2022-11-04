@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import * as helperFunctions from "../../../utils/helpers/helperFunctions";
 import addRemove from "../../../projects/the-internet/src/pages/addRemove";
 import basicAuth from "../../../projects/the-internet/src/pages/basicAuth";
 import brokenImages from "../../../projects/the-internet/src/pages/brokenImages";
@@ -17,7 +18,14 @@ import dynamicLoading from "../../../projects/the-internet/src/pages/dynamicLoad
 import fileUpload from "../../../projects/the-internet/src/pages/fileUpload";
 import fileDownload from "../../../projects/the-internet/src/pages/fileDownload";
 import floatingMenu from "../../../projects/the-internet/src/pages/floatingMenu";
+import horizontalSlider from "../../../projects/the-internet/src/pages/horizontalSlider";
 import hovers from "../../../projects/the-internet/src/pages/hovers";
+import frames from "../../../projects/the-internet/src/pages/frames";
+import auth from "../../../projects/the-internet/src/pages/auth";
+import forgotPassword from "../../../projects/the-internet/src/pages/forgotPassword";
+import testData from "../../fixtures/testData.json";
+import geolocation from "../../../projects/the-internet/src/pages/geolocation";
+import exitIntent from "../../../projects/the-internet/src/pages/exitIntent";
 import infiniteScroll from "../../../projects/the-internet/src/pages/infiniteScroll";
 
 describe("The Internet Test Suite", () => {
@@ -132,11 +140,6 @@ describe("The Internet Test Suite", () => {
 		});
 		dragAndDropPage.getColumnAHeader().should("have.text", "B");
 		dragAndDropPage.getColumnBHeader().should("have.text", "A");
-
-		// ! CYPRESS PLUGIN: CURRENTLY MISBEHAVING //
-		// dragAndDropPage.getColumnB().drag(dragAndDropPage.locators.columnA);
-		// dragAndDropPage.getColumnAHeader().should("have.text", "A");
-		// dragAndDropPage.getColumnBHeader().should("have.text", "B");
 	});
 
 	it("Tests dynamic content", () => {
@@ -273,6 +276,18 @@ describe("The Internet Test Suite", () => {
 		floatingMenuPage.getMenu().should("be.visible");
 	});
 
+	it("Tests a horizontal slider", () => {
+		const horizontalSliderPage = new horizontalSlider();
+		let value = 0.5;
+
+		horizontalSliderPage.visit();
+		while (value <= 5) {
+			horizontalSliderPage.getSlider().invoke("val", value).trigger("change");
+			horizontalSliderPage.getSliderLabel().should("have.text", value);
+			value += 0.5;
+		}
+	});
+
 	it("Tests Hovers", () => {
 		const hoversPage = new hovers();
 		for (var i = 0; i < 3; i++) {
@@ -285,6 +300,91 @@ describe("The Internet Test Suite", () => {
 			hoversPage.getViewProfileLink(i).click();
 			hoversPage.getNotFoundtitle().should("be.visible");
 		}
+	});
+
+	it("Tests frames", () => {
+		const framesPage = new frames();
+
+		framesPage.visit();
+		framesPage.getFirstLink().click();
+		framesPage.getTopFrame().within(() => {
+			framesPage.getTopLeftFrame().should("contain.text", "LEFT");
+		});
+		framesPage.getTopFrame().within(() => {
+			framesPage.getTopMiddleFrame().should("contain.text", "MIDDLE");
+		});
+		framesPage.getTopFrame().within(() => {
+			framesPage.getTopRightFrame().should("contain.text", "RIGHT");
+		});
+		framesPage.getBottomFrame().should("contain.text", "BOTTOM");
+		framesPage.visit();
+		framesPage.getSecondLink().click();
+		framesPage.getIFrame().within((frame) => {
+			cy.wrap(frame).find("p").should("have.text", "Your content goes here.");
+			cy.wrap(frame).clear().type("TEST");
+			cy.wrap(frame).find("p").should("have.text", "TEST");
+		});
+	});
+
+	it("Tests an authentication form", () => {
+		const authPage = new auth();
+		const validUsername = "tomsmith";
+		const validPassword = "SuperSecretPassword!";
+
+		authPage.visitLoggedIn();
+		authPage.getErrorSection().should("contain.text", "You must login to view the secure area!");
+		authPage.getLoginButton().click();
+		authPage.getErrorSection().should("contain.text", "Your username is invalid!");
+		authPage.getUsername().type(validUsername);
+		authPage.getLoginButton().click();
+		authPage.getErrorSection().should("contain.text", "Your password is invalid!");
+		authPage.getUsername().type(validUsername);
+		authPage.getPassword().type(validPassword);
+		authPage.getLoginButton().click();
+		authPage.getErrorSection().should("contain.text", "You logged into a secure area!");
+		authPage.getLogoutButton().click();
+		authPage.getErrorSection().should("contain.text", "You logged out of the secure area!");
+	});
+
+	it("Tests a forgot password form", () => {
+		const forgotPasswordPage = new forgotPassword();
+
+		cy.intercept("POST", "/forgot_password").as("forgotPassword");
+		forgotPasswordPage.visit();
+		forgotPasswordPage.getEmailInput().type(testData.email);
+		forgotPasswordPage.getSubmitButton().click();
+		cy.wait("@forgotPassword").then((interception) => {
+			expect(interception.request.body).to.contain(testData.email.replace("@", "%40"));
+			expect(interception.response.statusCode).to.eq(500);
+			expect(interception.response.body).to.contain("Internal Server Error");
+		});
+	});
+
+	it("Tests geolocation", () => {
+		const geolocationPage = new geolocation();
+		const fakeLatitude = helperFunctions.generateRandomIntegerWithMax(100);
+		const fakeLongitude = helperFunctions.generateRandomIntegerWithMax(100);
+
+		geolocationPage.visit(fakeLatitude, fakeLongitude);
+		geolocationPage.getWhereAmIButton().click();
+		geolocationPage.getLatitude().should("have.text", fakeLatitude);
+		geolocationPage.getLongitude().should("have.text", fakeLongitude);
+		geolocationPage
+			.getMapLink()
+			.invoke("attr", "href")
+			.should("contain", `${fakeLatitude},${fakeLongitude}`);
+	});
+
+	it("Tests exiting out of view", () => {
+		const exitIntentPage = new exitIntent();
+
+		/** Dislcaimer: This should be triggered by mousing out of the view but unfortunately 
+		the library used for the modal seems to have some issues */
+		exitIntentPage.visit();
+		exitIntentPage.getModal().should("not.be.visible");
+		exitIntentPage.getDocument().trigger("mouseout");
+		exitIntentPage.getModalContainer().invoke("attr", "style", "display: block");
+		exitIntentPage.getModal().should("be.visible");
 	});
 
 	it("Tests Infinite Scroll", () => {
