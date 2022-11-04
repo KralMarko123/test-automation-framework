@@ -26,6 +26,7 @@ import forgotPassword from "../../../projects/the-internet/src/pages/forgotPassw
 import testData from "../../fixtures/testData.json";
 import geolocation from "../../../projects/the-internet/src/pages/geolocation";
 import exitIntent from "../../../projects/the-internet/src/pages/exitIntent";
+import infiniteScroll from "../../../projects/the-internet/src/pages/infiniteScroll";
 
 describe("The Internet Test Suite", () => {
 	it("Tests split testing", () => {
@@ -384,5 +385,17 @@ describe("The Internet Test Suite", () => {
 		exitIntentPage.getDocument().trigger("mouseout");
 		exitIntentPage.getModalContainer().invoke("attr", "style", "display: block");
 		exitIntentPage.getModal().should("be.visible");
+	});
+
+	it("Tests Infinite Scroll", () => {
+		const infiniteScrollPage = new infiniteScroll();
+		infiniteScrollPage.visit();
+
+		for (let i = 1; i < 10; i++) {
+			infiniteScrollPage.getInfiniteText().last().scrollIntoView({ duration: 250, easing: "swing" });
+			infiniteScrollPage.getPlaceholderText().should("be.visible").and("have.text", "Loading...");
+			infiniteScrollPage.getInfiniteScrollChild(i).should("be.visible");
+			infiniteScrollPage.getInfiniteText().should("have.length", i + 1);
+		}
 	});
 });
